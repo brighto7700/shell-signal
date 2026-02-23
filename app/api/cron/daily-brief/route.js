@@ -3,7 +3,6 @@ import { enrichWithGitHub } from "@/lib/github";
 import { generateDailyBrief } from "@/lib/gemini";
 import { supabaseAdmin } from "@/lib/supabase";
 
-// Force Next.js to run this dynamically instead of caching the response
 export const dynamic = "force-dynamic";
 
 export async function GET(request) {
