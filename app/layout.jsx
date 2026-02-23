@@ -2,14 +2,31 @@ import "./globals.css";
 
 export const metadata = {
   title: "The Dev Signal — Real-Time Tech Dashboard for Developers",
-  description:
-    "Live tech news with GitHub repo health, AI takeaways, and trending dev topics. Built for developers.",
+  description: "A sharp, terminal-style dashboard tracking Hacker News and GitHub. Get AI-generated technical takeaways and live project health stats.",
   openGraph: {
     title: "The Dev Signal",
-    description: "Real-time developer intelligence. HN + GitHub + AI.",
+    description: "Real-time tech trends, GitHub health, and AI-powered dev insights.",
+    url: "https://dev-signal.vercel.app",
+    siteName: "The Dev Signal",
     type: "website",
+    // Link this to a static logo or screenshot in your public folder
+    images: [
+      {
+        url: "https://dev-signal.vercel.app/og-main.png", 
+        width: 1200,
+        height: 630,
+        alt: "The Dev Signal Dashboard Preview",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "The Dev Signal",
+    description: "The developer's real-time signal in the noise.",
+    images: ["https://dev-signal.vercel.app/og-main.png"],
   },
 };
+
 
 export default function RootLayout({ children }) {
   return (
