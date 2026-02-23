@@ -1,15 +1,24 @@
 import { supabase } from "@/lib/supabase";
 import { notFound } from "next/navigation";
 
+// 1. Merged Metadata Function
 export async function generateMetadata({ params }) {
+  const { date } = await params;
+  
   return {
-    title: `Dev Brief ${params.date} — The Dev Signal`,
-    description: `Top developer stories and AI summary for ${params.date}. Built for engineers.`,
+    title: `Dev Brief ${date} — The Dev Signal`,
+    description: `Top developer stories and AI summary for ${date}. Built for engineers.`,
+    openGraph: {
+      title: `The Dev Signal — ${date}`,
+      description: `Daily executive summary for developers.`,
+      images: [`/daily-brief/${date}/opengraph-image`], // Points to your dynamic OG generator
+    },
   };
 }
 
 export default async function DailyBriefPage({ params }) {
-  const { date } = params;
+  // 2. Handle params as async for Next.js 15 compatibility
+  const { date } = await params;
 
   const { data: brief } = await supabase
     .from("daily_briefs")
@@ -29,7 +38,15 @@ export default async function DailyBriefPage({ params }) {
           {date}
         </div>
         {brief.summary && (
-          <div style={{ background: "var(--bg2)", border: "1px solid var(--border)", borderLeft: "3px solid var(--green)", padding: "1.25rem", borderRadius: "3px", lineHeight: 1.8, whiteSpace: "pre-wrap" }}>
+          <div style={{ 
+            background: "var(--bg2)", 
+            border: "1px solid var(--border)", 
+            borderLeft: "3px solid var(--green)", 
+            padding: "1.25rem", 
+            borderRadius: "3px", 
+            lineHeight: 1.8, 
+            whiteSpace: "pre-wrap" 
+          }}>
             {brief.summary}
           </div>
         )}
@@ -60,13 +77,4 @@ export default async function DailyBriefPage({ params }) {
       </div>
     </main>
   );
-    }
-export async function generateMetadata({ params }) {
-  const { date } = await params;
-  return {
-    title: `Daily Brief - ${date}`,
-    openGraph: {
-      images: [`/daily-brief/${date}/opengraph-image`],
-    },
-  };
-                                                   }
+                }
