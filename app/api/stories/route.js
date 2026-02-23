@@ -7,11 +7,11 @@ export const revalidate = 300; // cache for 5 minutes
 export async function GET() {
   try {
     // 1. Fetch top HN stories
-    const stories = await getTopStories(30);
+    const stories = await getTopStories(10);
 
     // 2. Enrich GitHub repos (only first 15 to stay within rate limits)
     const enriched = await enrichWithGitHub(stories.slice(0, 15));
-    const final = [...enriched, ...stories.slice(15)];
+    const final = [...enriched];
 
     // 3. Cache in Supabase (fire and forget)
     supabaseAdmin
