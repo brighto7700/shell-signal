@@ -1,5 +1,7 @@
 import { supabase } from "@/lib/supabase";
 
+export const dynamic = 'force-dynamic'; // Prevents static HTML caching
+
 export async function GET() {
   const { data: briefs } = await supabase
     .from("daily_briefs")
@@ -10,8 +12,6 @@ export async function GET() {
     <url>
       <loc>https://dev-signal.vercel.app/daily-brief/${b.date}</loc>
       <lastmod>${new Date().toISOString()}</lastmod>
-      <changefreq>never</changefreq>
-      <priority>0.7</priority>
     </url>`).join('') || '';
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
@@ -19,15 +19,15 @@ export async function GET() {
       <url>
         <loc>https://dev-signal.vercel.app</loc>
         <lastmod>${new Date().toISOString()}</lastmod>
-        <changefreq>daily</changefreq>
-        <priority>1.0</priority>
       </url>
       ${dynamicEntries}
     </urlset>`;
 
   return new Response(sitemap, {
+    status: 200,
     headers: {
-      "Content-Type": "application/xml", // Forces the correct header
+      "Content-Type": "application/xml", // Forces the XML header
+      "Cache-Control": "no-store, max-age=0", // Ensures Google always sees fresh data
     },
   });
 }
