@@ -1,38 +1,25 @@
 import { supabase } from "@/lib/supabase";
 
 export default async function sitemap() {
-  const baseUrl = "https://dev-signal.vercel.app";
-
-  // 1. Fetch all brief dates from your Supabase archive
   const { data: briefs } = await supabase
     .from("daily_briefs")
     .select("date")
     .order("date", { ascending: false });
 
-  // 2. Map them into the format Google expects
-  const dynamicUrls = briefs?.map((brief) => ({
-    url: `${baseUrl}/daily-brief/${brief.date}`,
-    lastModified: new Date(brief.date),
-    changeFrequency: "never", // Since it's an archive, it won't change after publication
-    priority: 0.8,
+  const dynamicBriefs = briefs?.map((b) => ({
+    url: `https://dev-signal.vercel.app/daily-brief/${b.date}`,
+    lastModified: new Date(),
+    changeFrequency: 'never',
+    priority: 0.7,
   })) || [];
 
-  // 3. Define your static routes
-  const staticUrls = [
+  return [
     {
-      url: baseUrl,
+      url: 'https://dev-signal.vercel.app',
       lastModified: new Date(),
-      changeFrequency: "hourly", // The homepage updates constantly
-      priority: 1.0,
+      changeFrequency: 'daily',
+      priority: 1,
     },
-    {
-      url: `${baseUrl}/daily-brief`,
-      lastModified: new Date(),
-      changeFrequency: "daily",
-      priority: 0.9,
-    },
+    ...dynamicBriefs,
   ];
-
-  // 4. Combine and return
-  return [...staticUrls, ...dynamicUrls];
-    }
+}
