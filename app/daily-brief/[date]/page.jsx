@@ -61,3 +61,12 @@ export default async function DailyBriefPage({ params }) {
     </main>
   );
     }
+export async function generateMetadata({ params }) {
+  const { date } = await params;
+  return {
+    title: `Daily Brief - ${date}`,
+    openGraph: {
+      images: [`/daily-brief/${date}/opengraph-image`],
+    },
+  };
+                                                   }
