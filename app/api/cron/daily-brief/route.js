@@ -18,7 +18,7 @@ export async function GET(request) {
       .from("daily_briefs")
       .select("id")
       .eq("date", today)
-      .single();
+      .maybeSingle();
 
     if (existing) {
       return Response.json({ message: "Already generated for today" });
