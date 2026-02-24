@@ -1,4 +1,5 @@
-export const dynamic = 'force-dynamic'; // Tells Vercel: "Don't build this during deployment"
+export const dynamic = 'force-dynamic';
+export const revalidate = 0; // ADD THIS LINE: Tells Vercel cache to expire instantly
 
 import { supabase } from "@/lib/supabase";
 import { notFound } from "next/navigation";
