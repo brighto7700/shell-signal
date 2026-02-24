@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'; // Tells Vercel: "Don't build this during deployment"
+
 import { supabase } from "@/lib/supabase";
 import { notFound } from "next/navigation";
 
