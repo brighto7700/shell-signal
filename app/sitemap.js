@@ -9,7 +9,7 @@ export default async function sitemap() {
     .order("date", { ascending: false });
 
   const dynamicEntries = briefs?.map((b) => ({
-    url: `https://dev-signal.vercel.app/daily-brief/${b.date}`,
+    url: `https://devterminal.vercel.app/daily-brief/${b.date}`,
     lastModified: new Date(),
     changeFrequency: 'never', // Briefs don't change once written
     priority: 0.7,
@@ -17,7 +17,7 @@ export default async function sitemap() {
 
   return [
     {
-      url: 'https://dev-signal.vercel.app',
+      url: 'https://devterminal.vercel.app',
       lastModified: new Date(),
       changeFrequency: 'always', // Homepage changes constantly
       priority: 1,
