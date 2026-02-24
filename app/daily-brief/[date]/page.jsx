@@ -51,13 +51,15 @@ export default async function DailyBriefPage({ params }) {
             lineHeight: 1.8 
             // Removed whiteSpace: "pre-wrap" because ReactMarkdown handles spacing
           }}>
-            <ReactMarkdown
+                        <ReactMarkdown
               components={{
-                // Custom rendering to match your ShellSignal terminal theme
                 strong: ({node, ...props}) => <span style={{ color: "var(--green)", fontWeight: "bold" }} {...props} />,
                 p: ({node, ...props}) => <p style={{ marginBottom: "1rem" }} {...props} />,
                 ul: ({node, ...props}) => <ul style={{ paddingLeft: "1.5rem", marginBottom: "1rem", listStyleType: "square" }} {...props} />,
-                li: ({node, ...props}) => <li style={{ marginBottom: "0.5rem" }} {...props} />
+                li: ({node, ...props}) => <li style={{ marginBottom: "0.5rem" }} {...props} />,
+                // ADDED: Makes long code blocks scrollable on mobile!
+                pre: ({node, ...props}) => <pre style={{ overflowX: "auto", background: "#0a0a0a", padding: "1rem", borderRadius: "4px", marginTop: "1rem", border: "1px solid var(--border)" }} {...props} />,
+                code: ({node, ...props}) => <code style={{ fontFamily: "var(--mono)", color: "var(--amber)", fontSize: "0.85rem" }} {...props} />
               }}
             >
               {brief.summary}
