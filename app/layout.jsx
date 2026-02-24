@@ -2,23 +2,23 @@ import "./globals.css";
 import Script from 'next/script';
 
 export const metadata = {
-  title: "DevTerminal — Real-Time Developer Signal & AI Daily Brief",
-  description: "A sharp, terminal-style dashboard for senior developers. Live HN/GitHub trends and AI-powered technical takeaways.",
+  title: "ShellSignal — Terminal-Style Dev Dashboard & AI Brief",
+  description: "A sharp, terminal-style dashboard for senior developers. Real-time HN/GitHub trends and AI-powered technical takeaways.",
   alternates: {
-    canonical: 'https://devterminal.vercel.app', 
+    canonical: 'https://shellsignal.vercel.app', 
   },
   openGraph: {
-    title: "DevTerminal",
+    title: "ShellSignal",
     description: "The technical signal in the noise.",
-    url: "https://devterminal.vercel.app",
-    siteName: "DevTerminal",
+    url: "https://shellsignal.vercel.app",
+    siteName: "ShellSignal",
     images: [{ url: "/og-main.png" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "DevTerminal",
+    title: "ShellSignal",
     description: "Real-time technical signal for developers.",
-    images: ["https://devterminal.vercel.app/og-main.png"],
+    images: ["https://shellsignal.vercel.app/og-main.png"],
   },
 };
 
@@ -26,7 +26,7 @@ export default function RootLayout({ children }) {
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "TechArticle",
-    "headline": "DevTerminal — Real-Time Tech Dashboard",
+    "headline": "ShellSignal — Real-Time Tech Dashboard",
     "description": "A terminal-style dashboard for developers tracking Hacker News and GitHub.",
     "author": {
       "@type": "Person",
@@ -34,10 +34,10 @@ export default function RootLayout({ children }) {
     },
     "publisher": {
       "@type": "Organization",
-      "name": "DevTerminal",
+      "name": "ShellSignal",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://devterminal.vercel.app/og-main.png"
+        "url": "https://shellsignal.vercel.app/og-main.png"
       }
     }
   };
@@ -66,7 +66,7 @@ export default function RootLayout({ children }) {
 
         <header className="site-header">
           <a href="/" className="logo">
-            DEV<span>/</span>TERMINAL
+            SHELL<span>/</span>SIGNAL
           </a>
           <nav className="site-nav">
             <a href="/">FEED</a>
@@ -82,7 +82,7 @@ export default function RootLayout({ children }) {
 
         <footer className="site-footer">
           <p>
-            DEV TERMINAL · Data from{" "}
+            SHELL SIGNAL · Data from{" "}
             <a href="https://news.ycombinator.com" target="_blank" rel="noopener">
               Hacker News
             </a>{" "}
@@ -96,4 +96,4 @@ export default function RootLayout({ children }) {
       </body>
     </html>
   );
-            }
+      }
