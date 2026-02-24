@@ -17,7 +17,7 @@ export default async function sitemap() {
 
   return [
     {
-      url: 'https://devterminal.vercel.app',
+      url: 'https://shellsignal.vercel.app',
       lastModified: new Date(),
       changeFrequency: 'always', // Homepage changes constantly
       priority: 1,
