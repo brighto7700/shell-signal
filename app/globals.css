@@ -1,17 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Barlow:wght@300;400;600;700&display=swap');
 
 :root {
-  --bg: #0a0c0f;
-  --bg2: #0f1318;
-  --bg3: #141820;
-  --border: #1e2530;
-  --green: #00ff87;
-  --green-dim: #00cc6a;
-  --amber: #ffb300;
-  --red: #ff4455;
-  --text: #c8d4e0;
-  --text-dim: #5a6a7a;
-  --text-bright: #eaf2ff;
+  /* Updated to match the high-contrast deep palette */
+  --bg: #0d0f14;
+  --bg2: #161a22;
+  --bg3: #1c222d;
+  --border: #262e3d;
+  --green: #3ecf8e; /* The exact Supabase/Neon green from the mockup */
+  --green-glow: rgba(62, 207, 142, 0.3);
+  --green-dim: #2e9668;
+  --amber: #f5a623;
+  --red: #ff4d4d;
+  --text: #94a3b8;
+  --text-dim: #64748b;
+  --text-bright: #f8fafc;
   --mono: 'Share Tech Mono', monospace;
   --sans: 'Barlow', sans-serif;
 }
@@ -29,260 +31,154 @@ body {
   min-height: 100vh;
 }
 
+/* Subtle CRT Scanline overlay from mockup */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0,255,135,0.015) 2px,
-    rgba(0,255,135,0.015) 4px
-  );
+  background: linear-gradient(
+    rgba(18, 16, 16, 0) 50%, 
+    rgba(0, 0, 0, 0.1) 50%
+  ), 
+  linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 118, 0.02));
+  background-size: 100% 4px, 3px 100%;
   pointer-events: none;
   z-index: 9999;
 }
 
+/* Header matching the floating look */
 .site-header {
   border-bottom: 1px solid var(--border);
-  padding: 0 1.5rem;
+  padding: 0 1.25rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 56px;
+  height: 64px;
   position: sticky;
   top: 0;
-  background: rgba(10,12,15,0.95);
-  backdrop-filter: blur(8px);
+  background: rgba(13, 15, 20, 0.85);
+  backdrop-filter: blur(12px);
   z-index: 100;
 }
 
 .logo {
   font-family: var(--mono);
-  font-size: 1.1rem;
-  color: var(--green);
-  letter-spacing: 0.05em;
+  font-size: 1rem;
+  font-weight: bold;
+  color: var(--text-bright);
+  letter-spacing: 0.1em;
   text-decoration: none;
 }
+.logo span { color: var(--green); }
 
-.logo span { color: var(--text-dim); }
-
+/* The neon pill badge */
 .live-badge {
   font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--green);
+  background: rgba(62, 207, 142, 0.1);
+  border: 1px solid var(--green);
+  padding: 4px 10px;
+  border-radius: 20px;
+  text-transform: uppercase;
+  box-shadow: 0 0 10px var(--green-glow);
+}
+
+/* Rounded Cards with high-contrast borders */
+.daily-brief-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+}
+
+.snippet-box {
+  background: #0a0a0a;
+  border: 1px solid var(--green-dim);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-top: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.snippet-box::before {
+  content: 'DAILY SNIPPET';
+  position: absolute;
+  top: 0; right: 0;
+  font-family: var(--mono);
+  font-size: 0.5rem;
+  background: var(--green-dim);
+  color: #000;
+  padding: 2px 6px;
+  border-bottom-left-radius: 4px;
+}
+
+/* Story Card Redesign */
+.story-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.story-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--green-dim);
+}
+
+.dev-health {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  padding: 4px 12px;
+  border-radius: 6px;
+  display: inline-flex;
+  gap: 12px;
   font-size: 0.65rem;
   color: var(--green);
+  margin-top: 10px;
+}
+
+/* Floating Terminal Input bar at the bottom */
+.terminal-bar {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 32px);
+  max-width: 600px;
+  background: #000;
   border: 1px solid var(--green);
-  padding: 2px 8px;
-  border-radius: 2px;
-  letter-spacing: 0.1em;
-  animation: pulse 2s ease-in-out infinite;
+  border-radius: 8px;
   display: flex;
   align-items: center;
-  gap: 6px;
+  padding: 12px 16px;
+  box-shadow: 0 0 20px rgba(62, 207, 142, 0.2);
+  z-index: 1000;
 }
 
-.live-dot {
-  width: 6px; height: 6px;
-  background: var(--green);
-  border-radius: 50%;
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-.site-nav {
-  display: flex;
-  gap: 1.5rem;
+.terminal-prompt {
+  color: var(--green);
   font-family: var(--mono);
-  font-size: 0.75rem;
-  letter-spacing: 0.08em;
-  color: var(--text-dim);
-}
-
-.site-nav a {
-  color: var(--text-dim);
-  text-decoration: none;
-  transition: color 0.15s;
-}
-
-.site-nav a:hover { color: var(--green); }
-
-.main {
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 2rem 1.5rem;
-}
-
-.signal-bar {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  border: 1px solid var(--border);
-  background: var(--bg2);
-  padding: 8px 16px;
-  border-radius: 3px;
-  margin-bottom: 2rem;
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  overflow-x: auto;
+  margin-right: 10px;
   white-space: nowrap;
 }
 
-.signal-item { display: flex; flex-direction: column; gap: 2px; }
-.signal-label { color: var(--text-dim); font-size: 0.6rem; letter-spacing: 0.1em; }
-.signal-value { color: var(--amber); }
-
-.section-heading {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  letter-spacing: 0.15em;
-  color: var(--text-dim);
-  border-left: 2px solid var(--green);
-  padding-left: 10px;
-  margin-bottom: 1.25rem;
-}
-
-.stories-list { display: flex; flex-direction: column; gap: 0; }
-
-.story-card {
-  display: flex;
-  gap: 1rem;
-  padding: 1rem 0;
-  border-bottom: 1px solid var(--border);
-  transition: background 0.15s;
-}
-
-.story-card:hover { background: rgba(0, 255, 135, 0.02); }
-
-.story-rank {
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  color: var(--border);
-  min-width: 28px;
-  padding-top: 3px;
-  text-align: right;
-}
-
-.story-body { flex: 1; min-width: 0; }
-
-.story-title {
-  color: var(--text-bright);
-  text-decoration: none;
-  font-size: 0.95rem;
-  font-weight: 600;
-  line-height: 1.4;
-  display: block;
-  margin-bottom: 5px;
-}
-
-.story-title:hover { color: var(--green); }
-
-.story-meta {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  color: var(--text-dim);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 4px;
-  align-items: center;
-}
-
-.story-domain { color: var(--amber); }
-.dot { opacity: 0.4; }
-
-.hn-link { color: var(--text-dim); text-decoration: none; }
-.hn-link:hover { color: var(--green); }
-
-.dev-health {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: 8px;
-  font-family: var(--mono);
-  font-size: 0.65rem;
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-left: 2px solid var(--green-dim);
-  padding: 5px 10px;
-  border-radius: 2px;
-  color: var(--text);
-}
-
-.health-label {
-  color: var(--green-dim);
-  letter-spacing: 0.1em;
-  font-weight: bold;
-  margin-right: 4px;
-}
-
-.summary { margin-top: 8px; }
-
-.summary-toggle {
-  background: none;
+.terminal-input {
+  background: transparent;
   border: none;
+  color: var(--text-bright);
   font-family: var(--mono);
-  font-size: 0.65rem;
-  color: var(--text-dim);
-  cursor: pointer;
-  letter-spacing: 0.08em;
-  padding: 0;
+  width: 100%;
+  outline: none;
 }
-.summary-toggle:hover { color: var(--amber); }
-
-.summary-text {
-  margin-top: 6px;
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  color: var(--text);
-  background: var(--bg3);
-  border: 1px solid var(--border);
-  padding: 10px 12px;
-  border-radius: 3px;
-  white-space: pre-wrap;
-  line-height: 1.7;
-}
-
-.loading {
-  text-align: center;
-  font-family: var(--mono);
-  color: var(--green);
-  font-size: 0.8rem;
-  padding: 4rem 0;
-  letter-spacing: 0.1em;
-  animation: pulse 1.5s ease-in-out infinite;
-}
-
-.ad-slot {
-  border: 1px dashed var(--border);
-  border-radius: 3px;
-  padding: 1.5rem;
-  text-align: center;
-  margin: 2rem 0;
-  font-family: var(--mono);
-  font-size: 0.65rem;
-  color: var(--text-dim);
-  letter-spacing: 0.1em;
-}
-
-.site-footer {
-  border-top: 1px solid var(--border);
-  padding: 2rem 1.5rem;
-  text-align: center;
-  font-family: var(--mono);
-  font-size: 0.65rem;
-  color: var(--text-dim);
-  letter-spacing: 0.08em;
-}
-
-.site-footer a { color: var(--text-dim); text-decoration: none; }
-.site-footer a:hover { color: var(--green); }
 
 @media (max-width: 600px) {
-  .site-nav { display: none; }
-  .signal-bar { gap: 1rem; }
-  .main { padding: 1.5rem 1rem; }
-}
+  .main { padding: 1rem; }
+  .daily-brief-card { padding: 1.25rem; }
+  }
+    
