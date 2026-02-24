@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import StoryCard from "@/components/StoryCard";
 import TerminalBar from "@/components/TerminalBar";
+import TerminalOutput from "@/components/TerminalOutput"; // Ensure this exists!
 import Link from "next/link";
 
 export default function HomePage() {
@@ -9,6 +10,7 @@ export default function HomePage() {
   const [loading, setLoading] = useState(true);
   const [fetchedAt, setFetchedAt] = useState(null);
   const [latestDate, setLatestDate] = useState(null);
+  const [generatedCommand, setGeneratedCommand] = useState(""); // Holds the AI script
 
   useEffect(() => {
     fetch("/api/stories")
@@ -25,14 +27,11 @@ export default function HomePage() {
   }, []);
 
   const githubCount = stories.filter((s) => s.github).length;
-  const avgScore =
-    stories.length > 0
-      ? Math.round(stories.reduce((a, s) => a + s.score, 0) / stories.length)
-      : 0;
+  const avgScore = stories.length > 0 ? Math.round(stories.reduce((a, s) => a + s.score, 0) / stories.length) : 0;
 
   return (
     <main className="main">
-      {/* 📊 SIGNAL BAR: Formatted as a horizontal grid row */}
+      {/* 📊 SIGNAL BAR */}
       <div className="signal-bar">
         <div className="signal-item">
           <span className="signal-label">STORIES</span>
@@ -54,7 +53,7 @@ export default function HomePage() {
         </div>
       </div>
 
-      {/* 🚀 SYSTEM COMMANDS: Using the new terminal button classes */}
+      {/* 🚀 SYSTEM COMMANDS */}
       <div className="daily-brief-card">
         <p className="section-heading">SYSTEM COMMANDS</p>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
@@ -66,6 +65,12 @@ export default function HomePage() {
           </Link>
         </div>
       </div>
+
+      {/* 🖥️ TERMINAL OUTPUT WINDOW: Appears over content when a script is generated */}
+      <TerminalOutput 
+        command={generatedCommand} 
+        onClose={() => setGeneratedCommand("")} 
+      />
 
       <p className="section-heading">LIVE SIGNAL · TOP NEWS</p>
 
@@ -81,7 +86,8 @@ export default function HomePage() {
 
       {/* 📱 FLOATING TERMINAL BAR */}
       <div style={{ height: '100px' }} /> 
-      <TerminalBar />
+      <TerminalBar onResult={(cmd) => setGeneratedCommand(cmd)} />
     </main>
   );
-      }
+            }
+      
