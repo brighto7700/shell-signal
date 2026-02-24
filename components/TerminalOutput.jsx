@@ -28,7 +28,8 @@ export default function TerminalOutput({ command, onClose }) {
         borderTopRightRadius: '8px'
       }}>
         <span style={{ fontSize: '0.6rem', color: 'var(--green)' }}>GENERATED_SCRIPT.SH</span>
-        <button onClick={onClose} style={{ background: 'none', border: 'none', color: var(--red), cursor: 'pointer' }}>[X]</button>
+        {/* THE FIX: Added quotes around 'var(--red)' below */}
+        <button onClick={onClose} style={{ background: 'none', border: 'none', color: 'var(--red)', cursor: 'pointer' }}>[X]</button>
       </div>
       <div style={{ padding: '1.5rem', overflowX: 'auto' }}>
         <code style={{ color: 'var(--amber)', fontSize: '0.85rem', whiteSpace: 'pre' }}>
@@ -37,4 +38,4 @@ export default function TerminalOutput({ command, onClose }) {
       </div>
     </div>
   );
-        }
+      }
