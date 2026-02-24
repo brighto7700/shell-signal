@@ -2,16 +2,17 @@ export const dynamic = 'force-dynamic'; // Tells Vercel: "Don't build this durin
 
 import { supabase } from "@/lib/supabase";
 import { notFound } from "next/navigation";
+import ReactMarkdown from "react-markdown";
 
 // 1. Merged Metadata Function
 export async function generateMetadata({ params }) {
   const { date } = await params;
   
   return {
-    title: `Dev Brief ${date} — The Dev Signal`,
+    title: `Dev Brief ${date} — ShellSignal`,
     description: `Top developer stories and AI summary for ${date}. Built for engineers.`,
     openGraph: {
-      title: `The Dev Signal — ${date}`,
+      title: `ShellSignal — ${date}`,
       description: `Daily executive summary for developers.`,
       images: [`/daily-brief/${date}/opengraph-image`], // Points to your dynamic OG generator
     },
@@ -46,10 +47,20 @@ export default async function DailyBriefPage({ params }) {
             borderLeft: "3px solid var(--green)", 
             padding: "1.25rem", 
             borderRadius: "3px", 
-            lineHeight: 1.8, 
-            whiteSpace: "pre-wrap" 
+            lineHeight: 1.8 
+            // Removed whiteSpace: "pre-wrap" because ReactMarkdown handles spacing
           }}>
-            {brief.summary}
+            <ReactMarkdown
+              components={{
+                // Custom rendering to match your ShellSignal terminal theme
+                strong: ({node, ...props}) => <span style={{ color: "var(--green)", fontWeight: "bold" }} {...props} />,
+                p: ({node, ...props}) => <p style={{ marginBottom: "1rem" }} {...props} />,
+                ul: ({node, ...props}) => <ul style={{ paddingLeft: "1.5rem", marginBottom: "1rem", listStyleType: "square" }} {...props} />,
+                li: ({node, ...props}) => <li style={{ marginBottom: "0.5rem" }} {...props} />
+              }}
+            >
+              {brief.summary}
+            </ReactMarkdown>
           </div>
         )}
       </div>
@@ -79,4 +90,4 @@ export default async function DailyBriefPage({ params }) {
       </div>
     </main>
   );
-                }
+                                                    }
