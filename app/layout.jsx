@@ -28,10 +28,29 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  // Define Schema.org data
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": "The Dev Signal — Real-Time Tech Dashboard",
+    "description": "A terminal-style dashboard for developers tracking Hacker News and GitHub.",
+    "author": {
+      "@type": "Person",
+      "name": "Brighto G" // Your professional handle
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "The Dev Signal",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://dev-signal.vercel.app/og-main.png"
+      }
+    }
+  };
+
   return (
     <html lang="en">
       <head>
-        {/* Google Analytics - Loaded exactly once */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-1RKZ4EN7EM"
           strategy="afterInteractive"
@@ -46,6 +65,12 @@ export default function RootLayout({ children }) {
         </Script>
       </head>
       <body>
+        {/* Inject Structured Data for SEO */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+
         <header className="site-header">
           <a href="/" className="logo">
             THE DEV<span>/</span>SIGNAL
