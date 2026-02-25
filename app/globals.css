@@ -2,18 +2,18 @@
 
 :root {
   /* High-Contrast Charcoal & Neon Green Palette */
-  --bg: #0a0c10;        /* Deep charcoal for body */
-  --bg2: #12151a;       /* Lighter charcoal for cards */
-  --bg3: #1a1e26;       /* For hover states and inner boxes */
-  --border: #242933;    /* Distinct structural borders */
-  --green: #3ecf8e;     /* The vibrant neon green from mockup */
+  --bg: #0a0c10;
+  --bg2: #12151a;
+  --bg3: #1a1e26;
+  --border: #242933;
+  --green: #3ecf8e;
   --green-glow: rgba(62, 207, 142, 0.15);
   --green-dim: #2e9668;
   --amber: #f5a623;
   --red: #ff4d4d;
-  --text: #94a3b8;      /* Muted text for meta */
+  --text: #94a3b8;
   --text-dim: #64748b;
-  --text-bright: #f8fafc; /* Bright white for headlines */
+  --text-bright: #f8fafc;
   --mono: 'Share Tech Mono', monospace;
   --sans: 'Barlow', sans-serif;
 }
@@ -32,7 +32,13 @@ body {
   position: relative;
 }
 
-/* CRT Scanline Texture - Essential for the Mockup vibe */
+/* Force links to inherit terminal colors instead of browser blue */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* CRT Scanline Texture */
 body::before {
   content: '';
   position: fixed;
@@ -50,150 +56,186 @@ body::before {
 .main {
   max-width: 900px;
   margin: 0 auto;
-  padding: 2rem 1.25rem;
 }
 
-/* 🟢 TOP SIGNAL BAR: Now formatted in a neat row */
-.signal-bar {
+/* --- MOCKUP HEADER & TABS --- */
+.mockup-header {
   font-family: var(--mono);
   display: flex;
   justify-content: space-between;
-  border: 1px solid var(--border);
-  background: var(--bg2);
-  padding: 12px 16px;
-  border-radius: 8px;
-  margin-bottom: 2rem;
-  overflow-x: auto;
-  gap: 1.5rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
 }
 
-.signal-item { display: flex; flex-direction: column; }
-.signal-label { color: var(--text-dim); font-size: 0.65rem; letter-spacing: 0.1em; }
-.signal-value { color: var(--green); font-size: 0.85rem; }
-
-/* 🚀 SYSTEM COMMANDS BOX: Rounded and Glowing */
-.daily-brief-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-left: 4px solid var(--green);
-  border-radius: 12px;
-  padding: 1.5rem;
-  margin-bottom: 2rem;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+.mockup-title {
+  color: var(--text-bright);
+  font-size: 1.1rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
 }
 
-.section-heading {
+.mockup-date {
+  font-family: var(--mono);
+  color: var(--text-bright);
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.tab-nav {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1.5rem;
   font-family: var(--mono);
   font-size: 0.75rem;
-  letter-spacing: 0.15em;
+  letter-spacing: 0.1em;
+}
+
+.tab-item {
+  padding: 8px 16px;
   color: var(--text-dim);
-  margin-bottom: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.tab-item.active {
+  color: var(--green);
+  border-bottom: 2px solid var(--green);
+}
+
+/* --- MOCKUP DAILY BRIEF CARD --- */
+.mockup-brief-card {
+  border: 1px solid var(--green);
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-bottom: 2rem;
+  background: var(--bg2);
+  box-shadow: 0 0 15px rgba(62, 207, 142, 0.05);
+}
+
+.brief-header {
+  color: var(--green);
+  font-family: var(--sans);
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.75rem;
   text-transform: uppercase;
 }
 
-/* TERMINAL BUTTON STYLES */
-.btn-terminal-run {
-  padding: 12px;
-  border: 1px solid var(--green);
-  color: var(--green);
-  text-decoration: none;
-  text-align: center;
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  border-radius: 6px;
-  background: rgba(62, 207, 142, 0.05);
-  box-shadow: 0 0 10px var(--green-glow);
-  transition: all 0.2s ease;
-}
-
-.btn-terminal-run:hover {
-  background: rgba(62, 207, 142, 0.15);
-  box-shadow: 0 0 20px var(--green-glow);
-}
-
-.btn-terminal-view {
-  padding: 12px;
-  border: 1px solid var(--border);
+.brief-list {
+  list-style: none;
+  margin-bottom: 1.25rem;
+  font-size: 0.85rem;
   color: var(--text-bright);
-  text-decoration: none;
-  text-align: center;
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  border-radius: 6px;
-  background: var(--bg3);
 }
 
-/* 📡 STORY CARDS: Modern Rounded Aesthetic */
-.story-card {
+.brief-list li {
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.check-icon { color: var(--green); font-family: var(--mono); }
+
+/* The Nested Snippet Box */
+.mockup-snippet-box {
+  border: 1px solid var(--green-dim);
+  border-radius: 8px;
+  padding: 1rem;
+  background: #05070a;
+}
+
+.snippet-title {
+  color: var(--amber);
+  font-family: var(--sans);
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+/* --- NEW STORY CARD LAYOUT (HORIZONTAL) --- */
+.story-card-row {
+  display: flex;
+  align-items: center;
   background: var(--bg2);
   border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 1.25rem;
-  margin-bottom: 1rem;
-  transition: border-color 0.2s ease;
-}
-
-.story-card:hover { border-color: var(--green-dim); }
-
-.story-title {
-  color: var(--text-bright);
-  text-decoration: none;
-  font-size: 1rem;
-  font-weight: 600;
-  display: block;
-  margin-bottom: 6px;
-}
-
-.story-meta {
-  font-family: var(--mono);
-  font-size: 0.7rem;
-  color: var(--text-dim);
-  display: flex;
-  gap: 8px;
-  align-items: center;
-}
-
-.story-domain { color: var(--amber); }
-.dot { opacity: 0.5; }
-
-.dev-health {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  padding: 6px 12px;
-  border-radius: 8px;
-  display: inline-flex;
-  gap: 12px;
-  font-size: 0.65rem;
-  color: var(--green);
-  margin-top: 12px;
-  font-family: var(--mono);
-}
-
-.health-label { font-weight: bold; color: var(--green-dim); margin-right: 4px; }
-
-/* 📱 FLOATING TERMINAL BAR */
-.terminal-bar {
-  position: fixed;
-  bottom: 16px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 32px);
-  max-width: 600px;
-  background: #000;
-  border: 1px solid var(--green);
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  padding: 14px 18px;
-  box-shadow: 0 0 20px var(--green-glow);
-  z-index: 1000;
+  padding: 12px;
+  margin-bottom: 0.75rem;
+  gap: 12px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
 }
 
-.terminal-prompt { color: var(--green); font-family: var(--mono); margin-right: 12px; }
-.terminal-input { background: transparent; border: none; color: #fff; font-family: var(--mono); width: 100%; outline: none; }
+.story-card-row:hover {
+  border-color: var(--green-dim);
+  transform: translateY(-2px);
+}
 
-@media (max-width: 600px) {
-  .main { padding: 1.5rem 1rem; }
-  .btn-terminal-run, .btn-terminal-view { font-size: 0.65rem; }
-  }
+.story-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 6px;
+  background: var(--border);
+  flex-shrink: 0;
+}
+
+.story-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.story-card-title {
+  color: var(--text-bright);
+  font-weight: 600;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 2px;
+}
+
+.story-card-meta {
+  color: var(--text-dim);
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  text-transform: uppercase;
+}
+
+.story-health-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  color: var(--amber);
+  min-width: 70px;
+}
+
+.health-badge-label {
+  color: var(--green);
+  font-weight: bold;
+  margin-bottom: 2px;
+}
+
+/* --- UTILITY --- */
+.loading {
+  text-align: center;
+  font-family: var(--mono);
+  color: var(--green);
+  font-size: 0.8rem;
+  padding: 4rem 0;
+  letter-spacing: 0.1em;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+    }
   
