@@ -82,7 +82,7 @@ export default function HomePage() {
               <span className="snippet-icon">📁</span>
               <span className="snippet-title-text">Daily Snippet</span>
             </div>
-            {/* THE FIX: Wrapped the weird characters in JSX safe string literals */}
+            {/* JSX-safe string literals to prevent Vercel crashes */}
             <div className="snippet-body">
               <span className="c-amber">{"((<echo \"AI Summary:\\n m#sh:}:)"}</span><br/>
               &nbsp;&nbsp;<span className="c-blue">{"$(docker stats --no-stream --format"}</span> <span className="c-amber">{"\"table {{.Name}}\\t{n})"}</span><br/>
@@ -113,6 +113,7 @@ export default function HomePage() {
                 <div className="story-meta">{getDomain(story.url)} • {story.score} PTS</div>
               </div>
               
+              {/* RESTORED DEV HEALTH STATS (STARS + ISSUES) */}
               {story.github ? (
                 <div className="story-badge">
                   <span className="badge-label">DEV HEALTH</span>
@@ -120,7 +121,11 @@ export default function HomePage() {
                     ★ <span style={{ color: 'var(--green)', fontSize: '0.78rem' }}>
                       {story.github.stars >= 1000 ? (story.github.stars / 1000).toFixed(1) + 'k' : story.github.stars}
                     </span>
-                    <span className="badge-arrow"> ›</span>
+                    <span style={{ marginLeft: '4px', color: 'var(--amber)' }}>!</span> 
+                    <span style={{ color: 'var(--green)', fontSize: '0.78rem', marginLeft: '2px' }}>
+                      {story.github.openIssues}
+                    </span>
+                    <span className="badge-arrow" style={{ marginLeft: '2px' }}> ›</span>
                   </span>
                 </div>
               ) : (
@@ -157,7 +162,7 @@ export default function HomePage() {
             onChange={(e) => setPrompt(e.target.value)}
             disabled={generating}
             placeholder={generating ? "COMPILING..." : ""}
-            style={{ background: 'transparent', border: 'none', color: 'var(--text)', outline: 'none', width: '100%', fontFamily: 'var(--mono)', fontSize: '0.8rem' }}
+            style={{ background: 'transparent', border: 'none', color: 'var(--bright)', outline: 'none', width: '100%', fontFamily: 'var(--mono)', fontSize: '0.8rem' }}
           />
           {!prompt && !generating && <span className="terminal-cursor"></span>}
         </div>
@@ -167,5 +172,5 @@ export default function HomePage() {
       </form>
     </div>
   );
-        }
-            
+              }
+                
