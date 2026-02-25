@@ -3,7 +3,7 @@ import Script from 'next/script';
 
 export const metadata = {
   title: "ShellSignal — Terminal-Style Dev Dashboard & AI Brief",
-  metadataBase: new URL('https://shellsignal.vercel.app'), // ADD THIS LINE
+  metadataBase: new URL('https://shellsignal.vercel.app'),
   description: "A sharp, terminal-style dashboard for senior developers. Real-time HN/GitHub trends and AI-powered technical takeaways.",
   alternates: {
     canonical: 'https://shellsignal.vercel.app', 
@@ -65,36 +65,12 @@ export default function RootLayout({ children }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
 
-        <header className="site-header">
-          <a href="/" className="logo">
-            SHELL<span>/</span>SIGNAL
-          </a>
-          <nav className="site-nav">
-            <a href="/">FEED</a>
-            <a href="/daily-brief">DAILY BRIEF</a>
-          </nav>
-          <div className="live-badge">
-            <span className="live-dot" />
-            LIVE
-          </div>
-        </header>
-
+        {/* The ghost UI (header/footer) is gone so the new design can shine, 
+          but all your analytics and schema markup stay intact! 
+        */}
         {children}
 
-        <footer className="site-footer">
-          <p>
-            SHELL SIGNAL · Data from{" "}
-            <a href="https://news.ycombinator.com" target="_blank" rel="noopener">
-              Hacker News
-            </a>{" "}
-            &amp;{" "}
-            <a href="https://github.com" target="_blank" rel="noopener">
-              GitHub
-            </a>{" "}
-            · Summaries by Gemini Flash
-          </p>
-        </footer>
       </body>
     </html>
   );
-      }
+}
