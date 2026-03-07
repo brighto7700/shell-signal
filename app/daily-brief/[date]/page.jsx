@@ -1,27 +1,36 @@
 export const dynamic = 'force-dynamic';
-export const revalidate = 0; // ADD THIS LINE: Tells Vercel cache to expire instantly
+export const revalidate = 0; 
 
 import { supabase } from "@/lib/supabase";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 
-// 1. Merged Metadata Function
+// 1. Upgraded Metadata for Article rich results
 export async function generateMetadata({ params }) {
   const { date } = await params;
   
   return {
     title: `Dev Brief ${date} — ShellSignal`,
     description: `Top developer stories and AI summary for ${date}. Built for engineers.`,
+    authors: [{ name: "Bright Emmanuel", url: "https://brighto-g.vercel.app" }],
     openGraph: {
       title: `ShellSignal — ${date}`,
       description: `Daily executive summary for developers.`,
-      images: [`/daily-brief/${date}/opengraph-image`], // Points to your dynamic OG generator
+      url: `https://shellsignal.vercel.app/daily-brief/${date}`,
+      type: "article",
+      publishedTime: date,
+      authors: ["Bright Emmanuel"],
+      images: [`/daily-brief/${date}/opengraph-image`], 
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `ShellSignal Dev Brief | ${date}`,
+      description: `Daily executive summary for developers.`,
     },
   };
 }
 
 export default async function DailyBriefPage({ params }) {
-  // 2. Handle params as async for Next.js 15 compatibility
   const { date } = await params;
 
   const { data: brief } = await supabase
@@ -34,63 +43,101 @@ export default async function DailyBriefPage({ params }) {
 
   const stories = brief.top_stories || [];
 
-  return (
-    <main className="main">
-      <div style={{ marginBottom: "2rem" }}>
-        <p className="section-heading">DAILY DEV BRIEF</p>
-        <div style={{ fontFamily: "var(--mono)", color: "var(--amber)", fontSize: "0.8rem", marginBottom: "1rem" }}>
-          {date}
-        </div>
-        {brief.summary && (
-          <div style={{ 
-            background: "var(--bg2)", 
-            border: "1px solid var(--border)", 
-            borderLeft: "3px solid var(--green)", 
-            padding: "1.25rem", 
-            borderRadius: "3px", 
-            lineHeight: 1.8 
-            // Removed whiteSpace: "pre-wrap" because ReactMarkdown handles spacing
-          }}>
-                        <ReactMarkdown
-              components={{
-                strong: ({node, ...props}) => <span style={{ color: "var(--green)", fontWeight: "bold" }} {...props} />,
-                p: ({node, ...props}) => <p style={{ marginBottom: "1rem" }} {...props} />,
-                ul: ({node, ...props}) => <ul style={{ paddingLeft: "1.5rem", marginBottom: "1rem", listStyleType: "square" }} {...props} />,
-                li: ({node, ...props}) => <li style={{ marginBottom: "0.5rem" }} {...props} />,
-                // ADDED: Makes long code blocks scrollable on mobile!
-                pre: ({node, ...props}) => <pre style={{ overflowX: "auto", background: "#0a0a0a", padding: "1rem", borderRadius: "4px", marginTop: "1rem", border: "1px solid var(--border)" }} {...props} />,
-                code: ({node, ...props}) => <code style={{ fontFamily: "var(--mono)", color: "var(--amber)", fontSize: "0.85rem" }} {...props} />
-              }}
-            >
-              {brief.summary}
-            </ReactMarkdown>
-          </div>
-        )}
-      </div>
+  // 2. The Heavyweight E-E-A-T Schema
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    "headline": `ShellSignal Dev Brief: ${date}`,
+    "datePublished": date,
+    "dateModified": date,
+    "url": `https://shellsignal.vercel.app/daily-brief/${date}`,
+    "description": `Top developer stories and AI summary for ${date}.`,
+    "author": {
+      "@type": "Person",
+      "name": "Bright Emmanuel",
+      "url": "https://brighto-g.vercel.app",
+      "sameAs": [
+        "https://github.com/brighto7700",
+        "https://x.com/brighto7700",
+        "https://www.linkedin.com/in/brighto7700",
+        "https://dev.to/brighto7700",
+        "https://www.sitepoint.com/author/bright-emmanuel"
+      ]
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "ShellSignal",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://shellsignal.vercel.app/og-main.png" // Fallback if dynamic OG fails
+      }
+    }
+  };
 
-      <p className="section-heading">TOP STORIES THAT DAY</p>
-      <div className="stories-list">
-        {stories.map((story, i) => (
-          <div key={story.id || i} style={{ padding: "1rem 0", borderBottom: "1px solid var(--border)" }}>
-            <a
-              href={story.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{ color: "var(--text-bright)", textDecoration: "none", fontWeight: 600 }}
-            >
-              {story.title}
-            </a>
-            {story.github && (
-              <div className="dev-health" style={{ marginTop: 8 }}>
-                <span className="health-label">DEV HEALTH</span>
-                <span>★ {story.github.stars?.toLocaleString()}</span>
-                <span>! {story.github.openIssues} issues</span>
-                <span>⏱ {story.github.lastCommit}</span>
-              </div>
-            )}
+  return (
+    <>
+      {/* 3. Inject the JSON-LD silently into the DOM */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      
+      <main className="main">
+        <div style={{ marginBottom: "2rem" }}>
+          <p className="section-heading">DAILY DEV BRIEF</p>
+          <div style={{ fontFamily: "var(--mono)", color: "var(--amber)", fontSize: "0.8rem", marginBottom: "1rem" }}>
+            {date}
           </div>
-        ))}
-      </div>
-    </main>
+          {brief.summary && (
+            <div style={{ 
+              background: "var(--bg2)", 
+              border: "1px solid var(--border)", 
+              borderLeft: "3px solid var(--green)", 
+              padding: "1.25rem", 
+              borderRadius: "3px", 
+              lineHeight: 1.8 
+            }}>
+              <ReactMarkdown
+                components={{
+                  strong: ({node, ...props}) => <span style={{ color: "var(--green)", fontWeight: "bold" }} {...props} />,
+                  p: ({node, ...props}) => <p style={{ marginBottom: "1rem" }} {...props} />,
+                  ul: ({node, ...props}) => <ul style={{ paddingLeft: "1.5rem", marginBottom: "1rem", listStyleType: "square" }} {...props} />,
+                  li: ({node, ...props}) => <li style={{ marginBottom: "0.5rem" }} {...props} />,
+                  pre: ({node, ...props}) => <pre style={{ overflowX: "auto", background: "#0a0a0a", padding: "1rem", borderRadius: "4px", marginTop: "1rem", border: "1px solid var(--border)" }} {...props} />,
+                  code: ({node, ...props}) => <code style={{ fontFamily: "var(--mono)", color: "var(--amber)", fontSize: "0.85rem" }} {...props} />
+                }}
+              >
+                {brief.summary}
+              </ReactMarkdown>
+            </div>
+          )}
+        </div>
+
+        <p className="section-heading">TOP STORIES THAT DAY</p>
+        <div className="stories-list">
+          {stories.map((story, i) => (
+            <div key={story.id || i} style={{ padding: "1rem 0", borderBottom: "1px solid var(--border)" }}>
+              <a
+                href={story.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: "var(--text-bright)", textDecoration: "none", fontWeight: 600 }}
+              >
+                {story.title}
+              </a>
+              {story.github && (
+                <div className="dev-health" style={{ marginTop: 8 }}>
+                  <span className="health-label">DEV HEALTH</span>
+                  <span>★ {story.github.stars?.toLocaleString()}</span>
+                  <span>! {story.github.openIssues} issues</span>
+                  <span>⏱ {story.github.lastCommit}</span>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </main>
+    </>
   );
-                                                    }
+    }
+                
