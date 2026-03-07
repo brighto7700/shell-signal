@@ -5,18 +5,19 @@ import { supabase } from "@/lib/supabase";
 import { notFound } from "next/navigation";
 import ReactMarkdown from "react-markdown";
 
-// 1. Upgraded Metadata for Article rich results
+// 1. Upgraded Metadata for Article rich results on brgt.site
 export async function generateMetadata({ params }) {
   const { date } = await params;
   
   return {
     title: `Dev Brief ${date} — ShellSignal`,
-    description: `Top developer stories and AI summary for ${date}. Built for engineers.`,
-    authors: [{ name: "Bright Emmanuel", url: "https://brighto-g.vercel.app" }],
+    description: `Top developer stories and AI summary for ${date}. Built for engineers by Bright Emmanuel.`,
+    metadataBase: new URL('https://shellsignal.brgt.site'), // 🔥 DOMAIN UPDATED
+    authors: [{ name: "Bright Emmanuel", url: "https://brgt.site" }], // 🔥 UPDATED
     openGraph: {
       title: `ShellSignal — ${date}`,
       description: `Daily executive summary for developers.`,
-      url: `https://shellsignal.vercel.app/daily-brief/${date}`,
+      url: `https://shellsignal.brgt.site/daily-brief/${date}`, // 🔥 UPDATED
       type: "article",
       publishedTime: `${date}T08:00:00+01:00`,
       authors: ["Bright Emmanuel"],
@@ -26,6 +27,7 @@ export async function generateMetadata({ params }) {
       card: "summary_large_image",
       title: `ShellSignal Dev Brief | ${date}`,
       description: `Daily executive summary for developers.`,
+      images: [`https://shellsignal.brgt.site/og-main.png`], // 🔥 UPDATED
     },
   };
 }
@@ -43,25 +45,25 @@ export default async function DailyBriefPage({ params }) {
 
   const stories = brief.top_stories || [];
 
-  // Create a strict ISO datetime string (8:00 AM WAT) to clear Google warnings
+  // Create a strict ISO datetime string (8:00 AM WAT)
   const isoDate = `${date}T08:00:00+01:00`;
 
-  // 2. The Heavyweight E-E-A-T Schema (Zero Warnings)
+  // 2. The Heavyweight E-E-A-T Schema (Now pointing to brgt.site)
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "TechArticle",
     "headline": `ShellSignal Dev Brief: ${date}`,
     "image": [
-      "https://shellsignal.vercel.app/og-main.png" 
+      "https://shellsignal.brgt.site/og-main.png" // 🔥 UPDATED
     ],
     "datePublished": isoDate, 
     "dateModified": isoDate,  
-    "url": `https://shellsignal.vercel.app/daily-brief/${date}`,
+    "url": `https://shellsignal.brgt.site/daily-brief/${date}`, // 🔥 UPDATED
     "description": `Top developer stories and AI summary for ${date}.`,
     "author": {
       "@type": "Person",
       "name": "Bright Emmanuel",
-      "url": "https://brighto-g.vercel.app",
+      "url": "https://brgt.site", // 🔥 UPDATED
       "sameAs": [
         "https://github.com/brighto7700",
         "https://x.com/brighto7700",
@@ -75,7 +77,7 @@ export default async function DailyBriefPage({ params }) {
       "name": "ShellSignal",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://shellsignal.vercel.app/og-main.png"
+        "url": "https://shellsignal.brgt.site/og-main.png" // 🔥 UPDATED
       }
     }
   };
@@ -145,4 +147,4 @@ export default async function DailyBriefPage({ params }) {
       </main>
     </>
   );
-                                                      }
+}
