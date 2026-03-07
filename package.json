@@ -19,4 +19,9 @@
     "eslint": "^8",
     "eslint-config-next": "14.2.3"
   },
+  "browserslist": [
+    "last 2 versions",
+    "not dead",
+    "> 0.5%"
+  ]
 }
