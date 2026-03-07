@@ -1,62 +1,67 @@
 import "./globals.css";
 import Script from 'next/script';
 import AppShell from '@/components/AppShell';
+import { JetBrains_Mono, Inter } from 'next/font/google'; // Optimizing fonts
+
+// 1. Font Optimization: This eliminates render-blocking font requests
+const jetbrains = JetBrains_Mono({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-mono',
+});
+
+const inter = Inter({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-sans',
+});
 
 export const metadata = {
-  title: "ShellSignal — Terminal-Style Dev Dashboard & AI Brief",
-  metadataBase: new URL('https://shellsignal.brgt.site'),
-  description: "A sharp, terminal-style dashboard for senior developers. Real-time HN/GitHub trends and AI-powered technical takeaways.",
+  title: "Bright Emmanuel — Full-Stack Developer & Technical Writer",
+  metadataBase: new URL('https://brgt.site'),
+  description: "Portfolio of Bright Emmanuel. Specializing in Node.js, Go, and Python. Author at SitePoint & Dev.to.",
   alternates: {
-    canonical: 'https://shellsignal.brgt.site', 
+    canonical: '/', 
   },
   openGraph: {
-    title: "ShellSignal",
-    description: "The technical signal in the noise.",
-    url: "https://shellsignal.vercel.app",
-    siteName: "ShellSignal",
-    images: [{ url: "/og-main.png" }],
+    title: "Bright Emmanuel",
+    description: "Full-stack developer building the technical signal.",
+    url: "https://brgt.site",
+    siteName: "Bright Emmanuel",
+    images: [{ url: "/og-main.png" }], // Ensure this exists in your public folder
+    type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "ShellSignal",
-    description: "Real-time technical signal for developers.",
-    images: ["https://shellsignal.vercel.app/og-main.png"],
+    title: "Bright Emmanuel",
+    description: "Full-stack engineer & Technical Writer.",
+    images: ["https://brgt.site/og-main.png"],
   },
 };
 
 export default function RootLayout({ children }) {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": "ShellSignal",
-    "url": "https://shellsignal.vercel.app",
-    "headline": "ShellSignal — Real-Time Tech Dashboard",
-    "description": "A terminal-style dashboard for developers tracking Hacker News and GitHub.",
-    "author": {
-      "@type": "Person",
-      "name": "Bright Emmanuel",
-      "url": "https://brighto-g.vercel.app",
-      "sameAs": [
-        "https://github.com/brighto7700",
-        "https://x.com/brighto7700",
-        "https://www.linkedin.com/in/brighto7700",
-        "https://dev.to/brighto7700",
-        "https://www.sitepoint.com/author/bright-emmanuel"
-      ]
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "ShellSignal",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://shellsignal.vercel.app/og-main.png"
-      }
-    }
+    "@type": "Person", // Root domain should focus on YOU
+    "name": "Bright Emmanuel",
+    "url": "https://brgt.site",
+    "image": "https://brgt.site/og-main.png",
+    "jobTitle": "Full-Stack Developer",
+    "sameAs": [
+      "https://github.com/brighto7700",
+      "https://x.com/brighto7700",
+      "https://www.linkedin.com/in/brighto7700",
+      "https://dev.to/brighto7700",
+      "https://www.sitepoint.com/author/bright-emmanuel"
+    ],
+    "knowsAbout": ["Web Development", "Node.js", "Go", "Python", "Technical Writing"]
   };
 
   return (
-    <html lang="en">
+    <html lang="en" className={`${jetbrains.variable} ${inter.variable}`}>
       <head>
+        {/* Preconnect to external assets to speed up performance */}
+        <link rel="preconnect" href="https://api.dicebear.com" />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-1RKZ4EN7EM"
           strategy="afterInteractive"
@@ -70,7 +75,7 @@ export default function RootLayout({ children }) {
           `}
         </Script>
       </head>
-      <body>
+      <body style={{ fontFamily: 'var(--font-sans)' }}>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -81,4 +86,4 @@ export default function RootLayout({ children }) {
       </body>
     </html>
   );
-}
+      }
