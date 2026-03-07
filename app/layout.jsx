@@ -1,73 +1,69 @@
 import "./globals.css";
 import Script from 'next/script';
 import AppShell from '@/components/AppShell';
-import { JetBrains_Mono, Rajdhani } from 'next/font/google'; // 🔥 Performance: Localized Fonts
+import { JetBrains_Mono, Rajdhani } from 'next/font/google';
 
-// 1. Font Optimization: This downloads fonts at build-time to Vercel
-// This eliminates the 2.5s "Render Blocking" delay from Google Fonts
+// 🔥 PERFORMANCE: Localized fonts to kill the 2.5s render-blocking delay
 const mono = JetBrains_Mono({
   subsets: ['latin'],
   display: 'swap',
-  variable: '--font-mono', // This matches the var in your globals.css
+  variable: '--font-mono',
 });
 
 const sans = Rajdhani({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700'],
   display: 'swap',
-  variable: '--font-sans', // This matches the var in your globals.css
+  variable: '--font-sans',
 });
 
 export const metadata = {
-  title: "Bright Emmanuel — Full-Stack Developer & Technical Writer",
-  metadataBase: new URL('https://brgt.site'),
-  description: "Official portfolio of Bright Emmanuel. Full-stack engineer specializing in Node.js, Go, and Python. Author at SitePoint and Dev.to.",
+  title: "ShellSignal — Terminal-Style Dev Dashboard & AI Brief",
+  metadataBase: new URL('https://shellsignal.brgt.site'), // CORRECTED
+  description: "A real-time, terminal-style news dashboard and AI-powered daily brief for developers. Built by Bright Emmanuel.",
   alternates: {
-    canonical: '/', 
+    canonical: 'https://shellsignal.brgt.site', // CORRECTED
   },
   openGraph: {
-    title: "Bright Emmanuel",
-    description: "Building the technical signal in the noise.",
-    url: "https://brgt.site",
-    siteName: "Bright Emmanuel",
+    title: "ShellSignal",
+    description: "The technical signal in the noise. Terminal-style dev dashboard.",
+    url: "https://shellsignal.brgt.site", // CORRECTED
+    siteName: "ShellSignal",
     images: [{ url: "/og-main.png" }],
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Bright Emmanuel",
-    description: "Full-stack engineer & Technical Writer.",
-    images: ["https://brgt.site/og-main.png"],
+    title: "ShellSignal — Dev Dashboard",
+    description: "Terminal-style news dashboard & AI brief.",
+    images: ["https://shellsignal.brgt.site/og-main.png"], // CORRECTED
     creator: "@brighto7700",
   },
 };
 
 export default function RootLayout({ children }) {
-  // 2. The E-E-A-T Schema: Links your identity across all platforms
+  // 🧠 SCHEMA: Identifying ShellSignal as a WebApplication
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "Person",
-    "name": "Bright Emmanuel",
-    "url": "https://brgt.site",
-    "image": "https://brgt.site/og-main.png",
-    "jobTitle": "Full-Stack Developer",
-    "sameAs": [
-      "https://github.com/brighto7700",
-      "https://x.com/brighto7700",
-      "https://www.linkedin.com/in/brighto7700",
-      "https://dev.to/brighto7700",
-      "https://www.sitepoint.com/author/bright-emmanuel"
-    ],
-    "knowsAbout": ["Full-Stack Development", "Node.js", "Go", "Python", "Technical Writing", "AI Development"]
+    "@type": "WebApplication",
+    "name": "ShellSignal",
+    "url": "https://shellsignal.brgt.site",
+    "applicationCategory": "DeveloperTool",
+    "operatingSystem": "Web",
+    "author": {
+      "@type": "Person",
+      "name": "Bright Emmanuel",
+      "url": "https://brgt.site" // Link back to your main portfolio
+    },
+    "description": "Terminal-style dashboard providing AI-curated developer news and scripts."
   };
 
   return (
     <html lang="en" className={`${mono.variable} ${sans.variable}`}>
       <head>
-        {/* Preconnect to external APIs to save milliseconds on mobile */}
         <link rel="preconnect" href="https://api.dicebear.com" />
         
-        {/* Google Analytics - strategy="afterInteractive" ensures it doesn't block the initial render */}
+        {/* Google Analytics */}
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-1RKZ4EN7EM"
           strategy="afterInteractive"
@@ -82,7 +78,6 @@ export default function RootLayout({ children }) {
         </Script>
       </head>
       <body>
-        {/* Injecting Structured Data for the Knowledge Graph */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
