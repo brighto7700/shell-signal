@@ -1,13 +1,13 @@
 import "./globals.css";
 import Script from 'next/script';
-import AppShell from '@/components/AppShell'; // <-- ADD THIS IMPORT
+import AppShell from '@/components/AppShell';
 
 export const metadata = {
   title: "ShellSignal — Terminal-Style Dev Dashboard & AI Brief",
   metadataBase: new URL('https://shellsignal.vercel.app'),
   description: "A sharp, terminal-style dashboard for senior developers. Real-time HN/GitHub trends and AI-powered technical takeaways.",
   alternates: {
-    canonical: 'https://shellsignal.vercel.app', 
+    canonical: '/', 
   },
   openGraph: {
     title: "ShellSignal",
@@ -27,12 +27,22 @@ export const metadata = {
 export default function RootLayout({ children }) {
   const jsonLd = {
     "@context": "https://schema.org",
-    "@type": "TechArticle",
+    "@type": "WebSite",
+    "name": "ShellSignal",
+    "url": "https://shellsignal.vercel.app",
     "headline": "ShellSignal — Real-Time Tech Dashboard",
     "description": "A terminal-style dashboard for developers tracking Hacker News and GitHub.",
     "author": {
       "@type": "Person",
-      "name": "Brighto G"
+      "name": "Bright Emmanuel",
+      "url": "https://brighto-g.vercel.app",
+      "sameAs": [
+        "https://github.com/brighto7700",
+        "https://x.com/brighto7700",
+        "https://www.linkedin.com/in/brighto7700",
+        "https://dev.to/brighto7700",
+        "https://www.sitepoint.com/author/bright-emmanuel"
+      ]
     },
     "publisher": {
       "@type": "Organization",
@@ -65,11 +75,10 @@ export default function RootLayout({ children }) {
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {/* WRAP THE CHILDREN IN THE NEW APP SHELL */}
         <AppShell>
           {children}
         </AppShell>
       </body>
     </html>
   );
-      }
+}
