@@ -12,7 +12,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 export const revalidate = 86400; // Cache for 24 hours
 
 export default async function sitemap() {
-  const baseUrl = 'https://shellsignal.vercel.app';
+  const baseUrl = 'https://shellsignal.brgt.site';
   
   const staticRoutes = [
     { url: baseUrl, lastModified: new Date(), changeFrequency: 'always', priority: 1.0 },
