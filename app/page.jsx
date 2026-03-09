@@ -1,22 +1,21 @@
 import Link from "next/link";
 import StoryCard from "@/components/StoryCard";
 
-// 1. Metadata: Forces Google to show "Shell Signal" instead of the double URL
+// 1. Metadata: Forces Google to show "Shell Signal"
 export const metadata = {
   title: "Shell Signal — Terminal-Style Dev Dashboard",
   description: "Real-time developer news, AI-curated briefs, and technical signals. Built for the next billion engineers.",
   openGraph: {
-    siteName: "Shell Signal", // 🔥 Fixes the Google Search Brand Label
+    siteName: "Shell Signal", 
   },
 };
 
 export default async function HomePage() {
-  // 2. Server-Side Fetching: Respects your original /api/stories logic
-  // We use the absolute URL to ensure the server can reach itself during the build
+  // 2. Server-Side Fetching
   let stories = [];
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL || 'https://shellsignal.brgt.site'}/api/stories`, {
-      next: { revalidate: 60 } // Cache for 1 minute for elite performance
+      next: { revalidate: 60 } 
     });
     const data = await res.json();
     stories = data.stories || [];
@@ -26,7 +25,6 @@ export default async function HomePage() {
 
   const today = new Date().toISOString().split("T")[0];
 
-  // 3. WebSite Schema: The ID card to fix the search results snippet
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "WebSite",
@@ -42,9 +40,9 @@ export default async function HomePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* DAILY BRIEF CARD */}
+      {/* DAILY BRIEF CARD - Restored the transition property! */}
       <Link href={`/daily-brief/${today}`} style={{ display: 'block', textDecoration: 'none' }}>
-        <div className="brief-card" style={{ cursor: 'pointer' }}>
+        <div className="brief-card" style={{ transition: 'transform 0.1s', cursor: 'pointer' }}>
           <div className="brief-label">DAILY BRIEF</div>
           <ul className="brief-checks">
             <li><span className="check-icon">✔</span> AI Summary</li>
@@ -70,17 +68,16 @@ export default async function HomePage() {
       {/* TOP STORIES */}
       <div className="section-title">TOP STORIES</div>
 
-      <div className="stories-container">
-        {stories.length > 0 ? (
-          stories.slice(0, 15).map((story) => (
-            <StoryCard key={story.id} story={story} />
-          ))
-        ) : (
-          <div style={{ color: 'var(--green)', fontFamily: 'var(--mono)', fontSize: '0.8rem', textAlign: 'center', padding: '2rem' }}>
-            NO_SIGNAL_FOUND
-          </div>
-        )}
-      </div>
+      {/* Removed the rogue "stories-container" wrapper to preserve your CSS layout! */}
+      {stories && stories.length > 0 ? (
+        stories.slice(0, 15).map((story) => (
+          <StoryCard key={story.id} story={story} />
+        ))
+      ) : (
+        <div style={{ color: 'var(--green)', fontFamily: 'var(--mono)', fontSize: '0.8rem', textAlign: 'center', padding: '2rem' }}>
+          NO_SIGNAL_FOUND
+        </div>
+      )}
     </>
   );
-}
+      }
